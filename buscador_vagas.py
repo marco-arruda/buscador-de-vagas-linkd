@@ -37,7 +37,6 @@ class LinkedInJobScraper:
         params = {
             'keywords': keywords,
             'location': location,
-            'geoId': '106236613',
             'trk': 'public_jobs_jobs-search-bar_search-submit',
             'position': '1',
             'pageNum': '0'

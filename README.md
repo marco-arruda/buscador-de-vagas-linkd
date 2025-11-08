@@ -185,3 +185,44 @@ Marco Arruda
 - [LinkedIn Jobs](https://www.linkedin.com/jobs/)
 - [BeautifulSoup Documentation](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 - [Requests Documentation](https://requests.readthedocs.io/)
+
+## 🚀 API
+
+Este repositório inclui uma API simples usando FastAPI em `api/search.py`.
+
+Endpoint principal (local):
+
+- POST /  (quando o servidor estiver rodando em http://localhost:8000/)
+
+Payload (JSON):
+
+```json
+{
+   "query": "Desenvolvedor Python",
+   "location": "Recife, Pernambuco, Brasil",
+   "num_pages": 1
+}
+```
+
+Resposta: lista de objetos com os campos `titulo`, `empresa`, `localizacao`, `link`, `data_postagem`.
+
+Teste local com uvicorn:
+
+```bash
+pip install -r requirements.txt
+uvicorn api.search:app --reload --port 8000
+```
+
+Em seguida, faça uma requisição POST para `http://localhost:8000/` com o JSON do payload acima.
+
+Cache
+-----
+
+Esta API possui um cache em memória (LRU) com TTL para evitar chamadas repetidas ao LinkedIn
+durante curtos intervalos. Configurações padrão (em `api/search.py`):
+
+- TTL: 300 segundos (5 minutos)
+- Máximo de entradas: 128 (eviction LRU automática)
+
+O endpoint adiciona um header `X-Cache` na resposta com valor `HIT` quando o resultado veio do cache,
+ou `MISS` quando foi buscado novamente.
